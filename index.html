@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Maths Plus - Professional Typing Test</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --secondary: #2b6cb0;
+      --accent: #c53030;
+      --warning: #c05621;
+      --success: #22543d;
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --border: #cbd5e0;
+      --text: #2d3748;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 12px;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    /* Header & Branding */
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 18px 20px;
+      text-align: center;
+      border-bottom: 4px solid var(--secondary);
+    }
+    header h1 {
+      font-size: 26px;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    header p {
+      font-size: 15px;
+      color: #e2e8f0;
+    }
+    .contact-badge {
+      display: inline-block;
+      margin-top: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    .card {
+      padding: 24px;
+    }
+
+    /* Registration Form */
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+    input[type="text"], input[type="tel"], select {
+      width: 100%;
+      padding: 10px 12px;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: var(--secondary);
+    }
+
+    .notice-box {
+      background: #edf2f7;
+      border-left: 4px solid var(--secondary);
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .notice-box ul {
+      margin-left: 20px;
+      margin-top: 6px;
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      background: var(--secondary);
+      color: #fff;
+      padding: 12px;
+      font-size: 18px;
+      font-family: "Times New Roman", Times, serif;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: var(--primary);
+    }
+    .btn-submit {
+      background: #276749;
+      margin-top: 15px;
+    }
+    .btn-submit:hover {
+      background: #1c4532;
+    }
+
+    /* Exam Screen */
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ebf8ff;
+      padding: 12px 16px;
+      border: 1px solid #bee3f8;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .candidate-badge {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .timer-display {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    /* Passage Box: No auto-scroll, no auto-highlight, unselectable */
+    .passage-box {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 18px;
+      font-size: 18px;
+      line-height: 1.8;
+      height: 190px;
+      overflow-y: scroll;
+      user-select: none;
+      -webkit-user-select: none;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      white-space: pre-wrap;
+    }
+
+    .typing-area {
+      width: 100%;
+      height: 180px;
+      padding: 14px;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 18px;
+      line-height: 1.6;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      resize: vertical;
+      outline: none;
+    }
+    .typing-area:focus {
+      border-color: var(--secondary);
+    }
+
+    /* Scorecard Display */
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .stat-card {
+      background: #edf2f7;
+      padding: 12px 16px;
+      border-radius: 4px;
+      border-left: 4px solid var(--secondary);
+    }
+    .stat-title {
+      font-size: 14px;
+      color: #4a5568;
+    }
+    .stat-val {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 6px 14px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 4px;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .status-qualified {
+      background: #2f855a;
+    }
+    .status-disqualified {
+      background: #c53030;
+    }
+
+    /* Mistake Breakdown Visualizer */
+    .eval-display-box {
+      border: 1px solid var(--border);
+      background: #ffffff;
+      padding: 18px;
+      font-size: 18px;
+      line-height: 2.2;
+      border-radius: 4px;
+      margin-top: 10px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+    .eval-legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    .legend-tag {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .word-correct {
+      color: #22543d;
+      font-weight: bold;
+    }
+    .word-minor {
+      background-color: #feebc8;
+      color: #7b341e;
+      border-bottom: 2px solid #dd6b20;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+    .word-major {
+      background-color: #fed7d7;
+      color: #9b2c2c;
+      border-bottom: 2px solid #e53e3e;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+    .word-unattempted {
+      color: #a0aec0;
+    }
+
+    /* Leaderboard */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 18px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+    }
+    th {
+      background: #edf2f7;
+      font-weight: bold;
+    }
+    tr.qualified-row {
+      background-color: #f0fff4;
+    }
+    tr.disqualified-row {
+      background-color: #fff5f5;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Branding Header -->
+  <header>
+    <h1>CAREER MATHS PLUS</h1>
+    <p>Educator: <strong>Sanket Chowdhury</strong> | Offline Math & Reasoning Batch: <strong>Chakdaha, Nadia</strong></p>
+    <div class="contact-badge">📞 Calling / WhatsApp: 8001514969</div>
+  </header>
+
+  <!-- STEP 1: Registration Form -->
+  <div id="step-registration" class="card">
+    <h2 style="margin-bottom: 12px; border-bottom: 2px solid #edf2f7; padding-bottom: 8px;">Candidate Registration</h2>
+    
+    <div class="notice-box">
+      <strong>Exam Rules & Marking Scheme (Instruction No. 3):</strong>
+      <ul>
+        <li>Test Duration: <strong>10 Minutes</strong> (Passage Length: ~250 words / 1250 key depressions).</li>
+        <li>1 Word = <strong>5 Key Depressions</strong>.</li>
+        <li>Minimum Words to Qualify: <strong>200 Words</strong> (English) for General; <strong>120 Words</strong> for Blind / Low Vision / LDCP[cite: 1].</li>
+        <li>Qualifying Marks: <strong>140 Marks</strong> (General); <strong>84 Marks</strong> (Blind / Low Vision / LDCP)[cite: 1].</li>
+        <li>Mark Calculation: <code>Marks = Typed Words - (0.33 × Major Mistakes) - (0.15 × Minor Mistakes)</code>[cite: 1].</li>
+        <li>Un-typed / remaining words of the passage are <strong>NOT</strong> counted as mistakes.</li>
+      </ul>
+    </div>
+
+    <form id="regForm" onsubmit="startTest(event)">
+      <div class="form-group">
+        <label for="candName">Candidate Full Name *</label>
+        <input type="text" id="candName" required placeholder="e.g. Rahul Sharma">
+      </div>
+      <div class="form-group">
+        <label for="candPhone">Phone / WhatsApp Number *</label>
+        <input type="tel" id="candPhone" pattern="[0-9]{10}" required placeholder="10-digit mobile number">
+      </div>
+      <div class="form-group">
+        <label for="candCategory">Candidate Category *</label>
+        <select id="candCategory" required>
+          <option value="General">General / OBC / SC / ST</option>
+          <option value="PWD">Blind / Low Vision / LDCP (PWD)</option>
+        </select>
+      </div>
+      <button type="submit" class="btn">Proceed to Typing Examination</button>
+    </form>
+  </div>
+
+  <!-- STEP 2: Exam Interface -->
+  <div id="step-exam" class="card hidden">
+    <div class="exam-header">
+      <div class="candidate-badge" id="displayCandInfo">Candidate Info</div>
+      <div class="timer-display" id="timer">Time Left: 10:00</div>
+    </div>
+
+    <label>Test Passage (Auto-scroll & auto-highlight disabled):</label>
+    <div class="passage-box" id="passageText">The ICC Men's T20 World Cup 2026 final produced a sensational spectacle as India clashed against England for the ultimate world title! Hosted jointly across India & Sri Lanka, the grand finale at Ahmedabad's Narendra Modi Stadium drew over 115,000 roaring spectators! Choosing to bat first under the bright stadium floodlights, Team India unleashed early aggression: openers posted 64 runs during the initial powerplay (overs 1–6). Opener Yashasvi Jaiswal paced the innings brilliantly, hammering a fiery 72 runs off 41 balls [strike rate: 175.6%], including seven crisp boundaries & four towering sixes! Middle-order batter Tilak Varma joined the party; his rapid 45* off 24 deliveries propelled India to a formidable total of 208/4 in their allotted 20 overs. England's fielding unit showed resolve, saving crucial runs along the rope [@ deep mid-wicket & long-on]. Chasing a steep target [required run rate: 10.45/over], England launched a daring counter-attack! Jos Buttler struck a blistering 54 off 28 deliveries, but India's bowling attack maintained disciplined lines. Right-arm pacer Jasprit Bumrah proved exceptional once more; his yorkers conceded merely 18 runs while claiming 3 vital wickets (economy: 4.50). Spinners clamped down on the scoring during the crucial middle overs [overs 7–15], pushing England's required rate past 14/over. Despite brave resistance from Liam Livingstone (41 off 21 balls), England were restricted to 191/8! India clinched the match by 17 runs, successfully lifting the coveted T20 World Cup trophy once again! Loud fireworks, golden confetti, & triumphant celebrations lit up the night sky—marking another historic milestone for world cricket!</div>
+
+    <label for="typingInput">Candidate Typing Terminal:</label>
+    <textarea id="typingInput" class="typing-area" placeholder="Start typing here... Timer starts automatically on your first key press." onpaste="return false;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+
+    <button type="button" class="btn btn-submit" onclick="finishTest()">Submit Test</button>
+  </div>
+
+  <!-- STEP 3: Evaluation, Mistakes in Passage, & Leaderboard -->
+  <div id="step-result" class="card hidden">
+    <h2 style="margin-bottom: 10px;">Examination Scorecard</h2>
+    <div id="statusBadgeContainer" style="margin-bottom: 16px;"></div>
+
+    <div class="result-grid">
+      <div class="stat-card">
+        <div class="stat-title">Total Key Depressions</div>
+        <div class="stat-val" id="resKeyDep">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Typed Words (5 Dep/Word)</div>
+        <div class="stat-val" id="resTypedWords">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Gross Speed (WPM)</div>
+        <div class="stat-val" id="resWpm">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Major Mistakes</div>
+        <div class="stat-val" style="color: #c53030;" id="resMajorMistakes">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Minor Mistakes</div>
+        <div class="stat-val" style="color: #d69e2e;" id="resMinorMistakes">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Final Marks</div>
+        <div class="stat-val" id="resFinalMarks">0</div>
+      </div>
+    </div>
+
+    <!-- Mistakes In Passage Section -->
+    <h3 style="margin-top: 24px; border-bottom: 2px solid #edf2f7; padding-bottom: 6px;">Evaluation & Mistake Breakdown</h3>
+    <div class="eval-legend">
+      <span class="legend-tag" style="background:#c6f6d5; color:#22543d;">Correct Word</span>
+      <span class="legend-tag" style="background:#fed7d7; color:#9b2c2c;">Major Mistake (Spelling / Insertion)</span>
+      <span class="legend-tag" style="background:#feebc8; color:#7b341e;">Minor Mistake (Punctuation / Case)</span>
+      <span class="legend-tag" style="background:#edf2f7; color:#718096;">Remaining / Unattempted (No penalty)</span>
+    </div>
+    <div class="eval-display-box" id="passageEvaluationBox">
+      <!-- Highlighted analysis generated dynamically -->
+    </div>
+
+    <!-- Leaderboard Section -->
+    <h3 style="margin-top: 26px; border-bottom: 2px solid #edf2f7; padding-bottom: 6px;">Live Leaderboard</h3>
+    <p style="font-size: 14px; color: #718096; margin-bottom: 10px;">
+      * Qualified candidates are sorted on top by WPM[cite: 1]. Disqualified candidates appear below[cite: 1].
+    </p>
+
+    <div class="table-container">
+      <table id="leaderboardTable">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Candidate Name</th>
+            <th>Category</th>
+            <th>Key Dep.</th>
+            <th>WPM</th>
+            <th>Major / Minor</th>
+            <th>Marks</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- Populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+
+    <button type="button" class="btn" style="margin-top: 20px;" onclick="location.reload()">Take Another Test</button>
+  </div>
+</div>
+
+<script>
+  // CONFIGURATION: Optional Google Apps Script Web App Deployment URL
+  const GOOGLE_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycby_GhPidIghK8LtQK8UmLF_FJiCE74PHQkm-6Zys3WLcdy2shbqHgo0MNiOPvBfxLNb/exec";
+
+  let candidate = { name: "", phone: "", category: "General" };
+  let timerInterval = null;
+  let timeRemaining = 600; // 10 minutes in seconds
+  let testStarted = false;
+  let testSubmitted = false;
+  let testDurationSecs = 0;
+
+  const originalPassage = document.getElementById("passageText").innerText.trim();
+
+  function startTest(e) {
+    e.preventDefault();
+    candidate.name = document.getElementById("candName").value.trim();
+    candidate.phone = document.getElementById("candPhone").value.trim();
+    candidate.category = document.getElementById("candCategory").value;
+
+    document.getElementById("displayCandInfo").innerText = 
+      `Candidate: ${candidate.name} | Category: ${candidate.category}`;
+
+    document.getElementById("step-registration").classList.add("hidden");
+    document.getElementById("step-exam").classList.remove("hidden");
+
+    const input = document.getElementById("typingInput");
+    input.focus();
+    input.addEventListener("keydown", handleFirstKeystroke, { once: true });
+  }
+
+  function handleFirstKeystroke() {
+    if (!testStarted) {
+      testStarted = true;
+      timerInterval = setInterval(() => {
+        timeRemaining--;
+        testDurationSecs++;
+        updateTimerDisplay();
+        if (timeRemaining <= 0) {
+          clearInterval(timerInterval);
+          finishTest();
+        }
+      }, 1000);
+    }
+  }
+
+  function updateTimerDisplay() {
+    const mins = Math.floor(timeRemaining / 60);
+    const secs = timeRemaining % 60;
+    document.getElementById("timer").innerText = 
+      `Time Left: ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+
+  function evaluateTyping(origText, userText) {
+    const origWords = origText.split(/\s+/);
+    const userWords = userText.trim().length > 0 ? userText.trim().split(/\s+/) : [];
+
+    const keyDepressions = userText.length;
+    const typedWords = keyDepressions / 5.0; // 5 key depression = 1 word
+
+    let majorMistakes = 0;
+    let minorMistakes = 0;
+    const wordAnalyses = [];
+
+    const evalLimit = Math.min(origWords.length, userWords.length);
+
+    for (let i = 0; i < evalLimit; i++) {
+      const orig = origWords[i];
+      const typed = userWords[i];
+
+      if (orig === typed) {
+        wordAnalyses.push({
+          orig,
+          typed,
+          status: "correct"
+        });
+        continue;
+      }
+
+      // Check clean alphanumeric to separate spelling/insertion from case/punctuation
+      const cleanOrig = orig.replace(/[^\w\s]|_/g, "");
+      const cleanTyped = typed.replace(/[^\w\s]|_/g, "");
+
+      if (cleanOrig.toLowerCase() === cleanTyped.toLowerCase()) {
+        // Words match in letters
+        minorMistakes++; // Case mismatch (Rule 5e) or Punctuation mismatch (Rule 5b)
+        wordAnalyses.push({
+          orig,
+          typed,
+          status: "minor",
+          reason: cleanOrig !== cleanTyped ? "Letter casing mismatch" : "Punctuation error / omitted"
+        });
+      } else {
+        // Spelling mistake or foreign word insertion (Rule 5a, 5c, 5d)
+        majorMistakes++;
+        wordAnalyses.push({
+          orig,
+          typed,
+          status: "major",
+          reason: "Spelling mistake / wrong word"
+        });
+      }
+    }
+
+    // Extra typed words beyond passage length are counted as major mistakes (Rule 5a)
+    if (userWords.length > origWords.length) {
+      const extraCount = userWords.length - origWords.length;
+      majorMistakes += extraCount;
+      for (let j = origWords.length; j < userWords.length; j++) {
+        wordAnalyses.push({
+          orig: "[None]",
+          typed: userWords[j],
+          status: "major",
+          reason: "Extra inserted word"
+        });
+      }
+    }
+
+    // Add remaining/un-attempted passage words (NOT PENALIZED)
+    for (let k = evalLimit; k < origWords.length; k++) {
+      wordAnalyses.push({
+        orig: origWords[k],
+        typed: null,
+        status: "unattempted"
+      });
+    }
+
+    // Marks = Typed Words - 0.33 * Major - 0.15 * Minor (Rule 6a)
+    let marks = typedWords - (0.33 * majorMistakes) - (0.15 * minorMistakes);
+    marks = Math.max(0, parseFloat(marks.toFixed(2)));
+
+    // Disqualification conditions (Rules 3, 4, 6b, 6d)
+    const isPWD = candidate.category === "PWD";
+    const minWordsRequired = isPWD ? 120 : 200;
+    const minMarksRequired = isPWD ? 84 : 140;
+
+    const isQualified = (typedWords >= minWordsRequired) && (marks >= minMarksRequired);
+    const timeSpentMins = Math.max(testDurationSecs / 60, 0.1);
+    const wpm = parseFloat((typedWords / timeSpentMins).toFixed(1));
+
+    return {
+      keyDepressions,
+      typedWords: parseFloat(typedWords.toFixed(1)),
+      wpm,
+      majorMistakes,
+      minorMistakes,
+      marks,
+      isQualified,
+      wordAnalyses
+    };
+  }
+
+  function finishTest() {
+    if (testSubmitted) return;
+    testSubmitted = true;
+    if (timerInterval) clearInterval(timerInterval);
+
+    const typedText = document.getElementById("typingInput").value;
+    const result = evaluateTyping(originalPassage, typedText);
+
+    // Switch view
+    document.getElementById("step-exam").classList.add("hidden");
+    document.getElementById("step-result").classList.remove("hidden");
+
+    // Display statistics
+    document.getElementById("resKeyDep").innerText = result.keyDepressions;
+    document.getElementById("resTypedWords").innerText = result.typedWords;
+    document.getElementById("resWpm").innerText = result.wpm;
+    document.getElementById("resMajorMistakes").innerText = result.majorMistakes;
+    document.getElementById("resMinorMistakes").innerText = result.minorMistakes;
+    document.getElementById("resFinalMarks").innerText = result.marks;
+
+    const badgeContainer = document.getElementById("statusBadgeContainer");
+    if (result.isQualified) {
+      badgeContainer.innerHTML = `<span class="badge-status status-qualified">Status: QUALIFIED</span>`;
+    } else {
+      badgeContainer.innerHTML = `<span class="badge-status status-disqualified">Status: DISQUALIFIED</span>`;
+    }
+
+    // Render evaluated words in passage view
+    renderPassageBreakdown(result.wordAnalyses);
+
+    // Save and Render Leaderboard
+    const candidateRecord = {
+      name: candidate.name,
+      phone: candidate.phone,
+      category: candidate.category,
+      keyDepressions: result.keyDepressions,
+      wpm: result.wpm,
+      majorMistakes: result.majorMistakes,
+      minorMistakes: result.minorMistakes,
+      marks: result.marks,
+      isQualified: result.isQualified,
+      timestamp: new Date().toISOString()
+    };
+
+    saveRecord(candidateRecord);
+  }
+
+  function renderPassageBreakdown(analyses) {
+    const box = document.getElementById("passageEvaluationBox");
+    box.innerHTML = "";
+
+    analyses.forEach(item => {
+      const span = document.createElement("span");
+      span.style.marginRight = "6px";
+      span.style.display = "inline-block";
+
+      if (item.status === "correct") {
+        span.className = "word-correct";
+        span.innerText = item.orig;
+      } else if (item.status === "minor") {
+        span.className = "word-minor";
+        span.title = `Expected: "${item.orig}" | You typed: "${item.typed}" (${item.reason})`;
+        span.innerText = `${item.orig} [Typed: ${item.typed}]`;
+      } else if (item.status === "major") {
+        span.className = "word-major";
+        span.title = `Expected: "${item.orig}" | You typed: "${item.typed}" (${item.reason})`;
+        span.innerText = `${item.orig} [Typed: ${item.typed}]`;
+      } else if (item.status === "unattempted") {
+        span.className = "word-unattempted";
+        span.innerText = item.orig;
+      }
+
+      box.appendChild(span);
+    });
+  }
+
+  function saveRecord(record) {
+    let localData = JSON.parse(localStorage.getItem("typing_records") || "[]");
+    localData.push(record);
+    localStorage.setItem("typing_records", JSON.stringify(localData));
+
+    renderLeaderboard(localData);
+
+    // POST to Google Sheet Apps Script webhook if configured
+    if (GOOGLE_SCRIPT_WEBAPP_URL && GOOGLE_SCRIPT_WEBAPP_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL_HERE") {
+      fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(record)
+      }).catch(err => console.log("Google Sheets sync failed:", err));
+    }
+  }
+
+  function renderLeaderboard(data) {
+    const tbody = document.getElementById("leaderboardBody");
+    tbody.innerHTML = "";
+
+    // Separate into Qualified & Disqualified
+    const qualified = data.filter(d => d.isQualified);
+    const disqualified = data.filter(d => !d.isQualified);
+
+    // Sort each group descending by gross WPM
+    qualified.sort((a, b) => b.wpm - a.wpm);
+    disqualified.sort((a, b) => b.wpm - a.wpm);
+
+    const sortedList = [...qualified, ...disqualified];
+
+    sortedList.forEach((row, idx) => {
+      const tr = document.createElement("tr");
+      tr.className = row.isQualified ? "qualified-row" : "disqualified-row";
+      tr.innerHTML = `
+        <td>${idx + 1}</td>
+        <td><strong>${escapeHtml(row.name)}</strong></td>
+        <td>${escapeHtml(row.category)}</td>
+        <td>${row.keyDepressions}</td>
+        <td><strong>${row.wpm}</strong></td>
+        <td>${row.majorMistakes} / ${row.minorMistakes}</td>
+        <td>${row.marks}</td>
+        <td><strong style="color: ${row.isQualified ? '#2f855a' : '#c53030'};">${row.isQualified ? 'QUALIFIED' : 'DISQUALIFIED'}</strong></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+</script>
+</body>
+</html>
